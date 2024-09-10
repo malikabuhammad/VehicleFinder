@@ -1,8 +1,16 @@
-﻿namespace VehicleFinder.Models
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+
+namespace VehicleFinder.Models
 {
     public class HomeModels
     {
 
+        public class IndexModels
+        {
+            public List <SelectListItem> CarMakesList { get; set; }
+            public string manufacture_year { get; set; }
+
+        }
         // Get All Makes: returns json with this structure 
         public class Make
         {
