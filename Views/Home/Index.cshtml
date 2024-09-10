@@ -1,4 +1,61 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
- 
+﻿<fieldset>
+    <div class="row">
+        <div class="col-sm-12 col-md-6">
+            <div class="form-group AlertField">
+                <div>
+                    <label class="control-label">Car</label>
+                    <!-- Use a simple <select> element -->
+                    <select id="ddlMake" class="select2 form-control">
+                        <option value="-1">Select</option> <!-- Placeholder option -->
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-12 col-md-6">
+            <div class="form-group AlertField">
+                <div>
+                    <label class="control-label">Year</label>
+                    @Html.Editor("Year", new { @class = " form-control yearpicker", @id = "Year",@placeholder="Select a year " })
+                 </div>
+            </div>
+        </div>
+    </div>
+</fieldset>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $("#Year").yearpicker();
+
+        $('#ddlMake').select2({
+            placeholder: 'Select a car make',
+            allowClear: true,
+            width: '100%',
+            ajax: {
+                url: '@Url.Action("GetCarMakes", "Home")', // URL to controller action
+                dataType: 'json',
+                delay: 250, 
+                data: function (params) {
+                    return {
+                        searchTerm: params.term || '', 
+                        page: params.page || 1         
+                    };
+                },
+                processResults: function (data) {
+                    return {
+                        results: data.results,      
+                        pagination: {
+                            more: data.pagination.more 
+                        }
+                    };
+                },
+                cache: true
+            },
+            minimumInputLength: 0, 
+            minimumResultsForSearch: Infinity 
+        });
+    });
+</script>
