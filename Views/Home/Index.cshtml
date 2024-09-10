@@ -1,4 +1,44 @@
-﻿<fieldset>
+﻿@{
+    ViewBag.Title = "Car Finder";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+<style>
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    /* Select2 styling */
+    .select2-container--default .select2-selection--single {
+        background-color: #f5f5f5;
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+        height: 38px;
+        display: flex;
+        align-items: center;
+    }
+
+        .select2-container--default .select2-selection--single .select2-selection__arrow {
+            height: 100%;
+            position: absolute;
+            right: 10px;
+            top: 0;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__rendered {
+            padding-left: 15px;
+            line-height: 36px;
+            color: #495057;
+        }
+ 
+
+    .row {
+        margin-bottom: 20px;
+    }
+</style>
+
+<fieldset>
     <div class="row">
         <div class="col-sm-12 col-md-6">
             <div class="form-group AlertField">
@@ -6,8 +46,7 @@
                     <label class="control-label">Car</label>
                     <!-- Use a simple <select> element -->
                     <select id="ddlMake" class="select2 form-control">
-                        <option value="-1">Select</option> <!-- Placeholder option -->
-                    </select>
+                     </select>
                 </div>
             </div>
         </div>
@@ -22,31 +61,75 @@
         </div>
     </div>
 </fieldset>
-
+<div class="widget-body">
+    <table id="tbl_Data" class="table table-striped table-bordered" width="100%">
+        <thead>
+            <tr>
+                <th class="hasinput" style="width:10%">
+                    <div class="input-group">
+                        <input class="form-control" placeholder="Number" type="text" />
+                    </div>
+                </th>
+                <th class="hasinput" style="width:24%">
+                    <input type="text" class="form-control" placeholder="Name" />
+                </th>
+                <th class="hasinput" style="width:12%">
+                    <input type="text" class="form-control" placeholder="Model" />
+                </th>
+                <th style="width:18%">
+                    &nbsp;
+                </th>
+            </tr>
+            <tr>
+                <th>Number</th>
+                <th>Name</th>
+                <th>Model</th>
+                <th>&nbsp;</th>
+            </tr>
+        </thead>
+        <tbody>
+         
+        </tbody>
+    </table>
+</div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap5.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
 
 <script>
     $(document).ready(function () {
-        $("#Year").yearpicker();
 
-        $('#ddlMake').select2({
+        var responsiveHelper_tbl_Data = undefined;
+
+        var breakpointDefinition = {
+            tablet: 1024,
+            phone: 480
+        };
+         $("#Year").yearpicker({
+            startYear: 1980,
+            endYear: new Date().getFullYear(), 
+            year: new Date().getFullYear()
+        });
+
+         $('#ddlMake').select2({
             placeholder: 'Select a car make',
             allowClear: true,
             width: '100%',
             ajax: {
-                url: '@Url.Action("GetCarMakes", "Home")', // URL to controller action
+                url: '@Url.Action("GetCarMakes", "Home")',
                 dataType: 'json',
-                delay: 250, 
+                delay: 250,
                 data: function (params) {
                     return {
-                        searchTerm: params.term || '', 
+                        searchTerm: params.term || '',
                         page: params.page || 1         
                     };
                 },
                 processResults: function (data) {
                     return {
-                        results: data.results,      
+                        results: data.results,  
                         pagination: {
                             more: data.pagination.more 
                         }
@@ -55,7 +138,61 @@
                 cache: true
             },
             minimumInputLength: 0, 
-            minimumResultsForSearch: Infinity 
+            minimumResultsForSearch: 1, 
         });
+
+
+        var otable = $('#tbl_Data').DataTable({
+           
+            aoColumns: [
+                { mData: 'makeID' },
+                { mData: 'makeName' },
+                { mData: 'model' },
+                { mData: 'makeID' }
+            ],
+            "columnDefs": [{
+                orderable: false,
+                className: "text-center",
+                targets: 3,
+                render: function (o, v) {   // o, v contains the object and value for the column
+                    return '<input type="checkbox" id="chkItem" name="chkItem" data-id="' + o + '" />';
+                }
+            }]
+            ,
+            "order": [[1, "desc"]],
+
+             
+            "autoWidth": true,
+            "preDrawCallback": function () {
+                // Initialize the responsive datatables helper once.
+                if (!responsiveHelper_tbl_Data) {
+                    responsiveHelper_tbl_Data = new ResponsiveDatatablesHelper($('#tbl_Data'), breakpointDefinition);
+                }
+            },
+            "rowCallback": function (nRow) {
+                responsiveHelper_tbl_Data.createExpandIcon(nRow);
+            },
+            "drawCallback": function (oSettings) {
+                responsiveHelper_tbl_Data.respond();
+            }
+
+        });
+        window.tabledata = otable;
+        $('#tbl_Data tbody').on('click', '.hidden-delete', function () {
+            var nRow = $(this).parents('tr')[0];
+            otable.row(nRow).remove().draw(false);
+        });
+ 
+        // Apply the filter
+        $("#tbl_Data thead th input[type=text]").on('keyup change', function () {
+            otable
+                .column($(this).parent().index() + ':visible')
+                .search(this.value)
+                .draw();
+        });
+
+      
+
     });
+
 </script>
