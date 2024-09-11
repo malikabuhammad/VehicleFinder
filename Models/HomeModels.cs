@@ -40,6 +40,23 @@ namespace VehicleFinder.Models
                 public string Model_Name { get; set; }
             }
 
+        public class VehicleResult
+        {
+            public int Count { get; set; }
+            public string Message { get; set; }
+            public string SearchCriteria { get; set; }
+            public List<VechicleModel> Results { get; set; }
         }
+
+
+        public class VechicleTypeResult
+        {
+            public int Count { get; set; }
+            public string Message { get; set; }
+            public string SearchCriteria { get; set; }
+            public List<VehicleType> Results { get; set; }
+        }
+
+    }
     }
  

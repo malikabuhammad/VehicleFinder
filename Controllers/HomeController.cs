@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Newtonsoft.Json;
 using System.Net.Http;
 using VehicleFinder.Models;
@@ -53,6 +54,65 @@ namespace VehicleFinder.Controllers
                 return BadRequest(new { error = ex.Message });
             }
         }
+
+
+
+
+        [HttpGet]
+        public async Task<IActionResult> GetVehicleTypeByMakeID(string MakeID)
+        {
+            try
+            {
+              
+                var vehcileResponse = await _httpClient.GetStringAsync($"https://vpic.nhtsa.dot.gov/api/vehicles/GetVehicleTypesForMakeId/{MakeID}?format=json");
+                var typeData = JsonConvert.DeserializeObject<VechicleTypeResult>(vehcileResponse);
+
+
+
+                 var result = typeData.Results.Select(r => new
+                {
+                    id = r.VehicleTypeId,
+                    name=r.VehicleTypeName
+                });
+                return Json(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { error = ex.Message });
+            }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetCars(string MakeID, string Year )
+        {
+            try
+            {
+                // Define the number of items per page (100 in this case)
+                int pageSize = 100;
+
+                // Fetch data from the API
+                var vehcileResponse = await _httpClient.GetStringAsync($"https://vpic.nhtsa.dot.gov/api/vehicles/GetModelsForMakeIdYear/makeId/{MakeID}/modelyear/{Year}?format=json");
+                var vehiclesData = JsonConvert.DeserializeObject<VehicleResult>(vehcileResponse);
+
+
+
+                // Return results with pagination data
+                var result = vehiclesData.Results.Select(r => new
+                {
+                    makeID = r.Make_ID,
+                    makeName = r.Make_Name,
+                    model = r.Model_Name
+                });
+                return Json(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { error = ex.Message });
+            }
+        }
+
+
+
 
         public IActionResult Privacy()
         {

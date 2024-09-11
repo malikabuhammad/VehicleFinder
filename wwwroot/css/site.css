@@ -19,4 +19,141 @@ html {
 
 body {
   margin-bottom: 60px;
+
+
+
+}
+ 
+h1, h2, h3, h4, h5, h6 {
+    color: #2c3e50;
+    font-weight: 600;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+/* Elegant Widget Styling */
+.widget {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+    padding: 20px;
+    margin-bottom: 40px;
+}
+
+.widget-header {
+    background-color: #e0e7eb;
+    color: #2c3e50;
+    padding: 15px;
+    border-radius: 10px 10px 0 0;
+    font-size: 20px;
+    font-weight: 700;
+    text-align: center;
+}
+
+.widget-body {
+    padding: 20px;
+}
+
+/* Customize form labels */
+label.control-label {
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+/* Customize inputs */
+.form-control {
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 16px;
+    background-color: #ffffff;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+    .form-control:focus {
+        border-color: #5c9eaf;
+        box-shadow: 0 0 8px rgba(92, 158, 175, 0.1);
+    }
+
+    .form-control::placeholder {
+        color: #adb5bd;
+    }
+
+/* Select2 styling */
+.select2-container--default .select2-selection--single {
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    transition: border-color 0.3s ease;
+}
+
+    .select2-container--default .select2-selection--single:hover {
+        border-color: #5c9eaf;
+    }
+
+    .select2-container--default .select2-selection--single .select2-selection__arrow {
+        height: 100%;
+        position: absolute;
+        right: 10px;
+        top: 0;
+    }
+
+    .select2-container--default .select2-selection--single .select2-selection__rendered {
+        padding-left: 15px;
+        line-height: 36px;
+        color: #495057;
+    }
+
+ 
+
+/* Input group styling */
+.input-group {
+    display: flex;
+    align-items: center;
+}
+
+    .input-group .form-control {
+        flex-grow: 1;
+        margin-right: 10px;
+    }
+
+/* Table filters */
+.hasinput input {
+    border-radius: 20px;
+    padding: 5px 15px;
+}
+
+/* Smaller table buttons */
+.dataTables_length select,
+.dataTables_filter input {
+    width: auto;
+    padding: 5px;
+    font-size: 14px;
+    height: 30px;
+}
+
+/* Add space between the form and table */
+.table-spacing {
+    margin-top: 40px;
+}
+
+/* Responsive tweaks */
+@@media (max-width: 768px) {
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .form-control {
+        font-size: 14px;
+    }
+}
+
+div.dataTables_wrapper div.dataTables_length select {
+    width: 40% !important;
+    display: inline-block !important;
 }
