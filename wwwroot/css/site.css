@@ -157,3 +157,84 @@ div.dataTables_wrapper div.dataTables_length select {
     width: 40% !important;
     display: inline-block !important;
 }
+
+
+
+
+
+
+.form-control, .select2-container--default .select2-selection--single {
+    height: auto;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ced4da;
+}
+
+    .select2-container--default .select2-selection--single .select2-selection__rendered {
+        line-height: 28px;
+    }
+
+    .select2-container--default .select2-selection--single .select2-selection__arrow {
+        height: 34px;
+    }
+
+.table thead th {
+    background-color: #f7f7f7;
+    font-weight: 200;
+ }
+
+.widget-header {
+    color: #333;
+}
+
+.hasinput input {
+    border-radius: 6px;
+}
+
+.select2-results__option {
+    padding: 10px;
+}
+
+.form-group label {
+    font-size: 1rem;
+}
+@font-face {
+    font-family: "DIN Next LT Arabic Regular" !important;
+    src: url(/Fonts/alfont_com_AlFont_com_DINNextLTArabic-Regular.ttf) format("truetype") !important;
+}
+
+
+div.dataTables_wrapper div.dataTables_length select {
+    width: 12% !important;
+    display: inline-block !important;
+}
+
+div.dataTables_wrapper div.dataTables_filter label {
+    font-weight: normal !important;
+    white-space: nowrap !important;
+ }
+
+body > footer, body > header, body > main {
+    width: 100% !important;
+    /* margin-right: auto; */
+    margin-left: auto !important;
+    padding:0px!important;
+}
+
+.select2-container--default .select2-results__option--highlighted[aria-selected] {
+    background-color: #333 !important;
+    color: white !important;
+    font-size: medium !important;
+}
+
+.select2-results__option[aria-selected] {
+    cursor: pointer  !important;
+    font-size: medium !important;
+}
+.yearpicker-items:hover {
+    color: rgb(21 32 28) !important;
+}
+
+.yearpicker-items.selected {
+    color: rgb(21 32 28) !important;
+}

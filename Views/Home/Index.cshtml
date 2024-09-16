@@ -1,44 +1,44 @@
 ﻿@{
     ViewBag.Title = "Car Finder";
     Layout = "~/Views/Shared/_Layout.cshtml";
-
 }
- 
+
 <!-- Widget -->
-<div class="widget">
-    <div class="widget-header">
-        Car Finder
+<div class="widget" style="background-color: #f9f9f9; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); margin-bottom: 30px;">
+    <div class="widget-header" style="font-size: 1.5rem; font-weight: 500; margin-bottom: 15px;">
+        Select the criteria to begin
     </div>
     <div class="widget-body">
         <fieldset>
             <div class="row">
+                <!-- First Column -->
                 <div class="col-sm-12 col-md-6">
                     <div class="form-group AlertField">
                         <div>
-                            <label class="control-label">Vehicle </label>
-                            <!-- Use a simple <select> element -->
-                            <select id="ddlMake" class="select2 form-control" onchange="GetTableData()">
+                            <label class="control-label" style="font-weight: 500;">Vehicle</label>
+                            <select id="ddlMake" class="select2 form-control" onchange="GetTableData()" style="width: 100%; padding: 10px; border-radius: 6px;">
                             </select>
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-12 col-md-6">
-                    <div class="form-group AlertField">
-                        <div>
-                            <label class="control-label">Vehicle Type</label>
-                            <!-- Use a simple <select> element -->
-                            <select id="ddlVehicleType" class="select2 form-control" onchange="GetTableData()">
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-12 col-md-6">
 
-                <div class="form-group">
-                    <label for="exampleInputEmail1">Year</label>
-                    <input type="text" class="form-control yearpicker" id="Year" placeholder="Select a Year " onchange="GetTableData()">
-                 </div>
-                     
+                <!-- Second Column -->
+                <div class="col-sm-12 col-md-6">
+                    <div class="form-group AlertField">
+                        <div>
+                            <label class="control-label" style="font-weight: 500;">Vehicle Type</label>
+                            <select id="ddlVehicleType" class="select2 form-control" onchange="GetTableData()" style="width: 100%; padding: 10px; border-radius: 6px;">
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Third Column -->
+                <div class="col-sm-12 col-md-6">
+                    <div class="form-group">
+                        <label for="Year" style="font-weight: 500;">Year</label>
+                        <input type="text" class="form-control yearpicker" id="Year" placeholder="Select a Year" onchange="GetTableData()" style="width: 100%; padding: 10px; border-radius: 6px;">
+                    </div>
                 </div>
             </div>
         </fieldset>
@@ -46,42 +46,39 @@
 </div>
 
 <!-- Space between widget and table -->
-<div class="table-spacing">
-    <table id="tbl_Data" class="table table-striped table-bordered" style="width:100%">
-        <thead>
+<div class="table-spacing" style="margin-top: 30px;">
+    <table id="tbl_Data" class="table table-striped table-bordered" style="width:100%; background-color: white; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); border-radius: 8px;">
+        <thead style="background-color: #f1f1f1;">
             <tr>
-                <th class="hasinput" style="width:10%">
+                <th class="hasinput" style="width:10%; padding: 10px;">
                     <div class="input-group">
-                        <input class="form-control" placeholder="Number" type="text" />
+                        <input class="form-control" placeholder="Number" type="text" style="border-radius: 6px; padding: 10px;" />
                     </div>
                 </th>
-                <th class="hasinput" style="width:24%">
-                    <input type="text" class="form-control" placeholder="Name" />
+                <th class="hasinput" style="width:24%; padding: 10px;">
+                    <input type="text" class="form-control" placeholder="Name" style="border-radius: 6px; padding: 10px;" />
                 </th>
-                <th class="hasinput" style="width:12%">
-                    <input type="text" class="form-control" placeholder="Model" />
+                <th class="hasinput" style="width:12%; padding: 10px;">
+                    <input type="text" class="form-control" placeholder="Model" style="border-radius: 6px; padding: 10px;" />
                 </th>
             </tr>
             <tr>
                 <th>Vehicle Code</th>
                 <th>Vehicle Name</th>
-                <th>Vechicle Model</th>
+                <th>Vehicle Model</th>
             </tr>
         </thead>
         <tbody>
-         </tbody>
+        </tbody>
     </table>
 </div>
 
+<!-- JS and Styles -->
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
- 
-
- 
 <script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
-
-
+<script src="https://cdn.jsdelivr.net/npm/yearpicker@1.0.1/dist/yearpicker.js"></script>
+ 
 <script>
     $(document).ready(function () {
 
@@ -104,7 +101,7 @@
             ajax: {
                 url: '@Url.Action("GetCarMakes", "Home")',
                 dataType: 'json',
-                delay: 250,
+             
                 data: function (params) {
                     return {
                         searchTerm: params.term || '',
@@ -128,7 +125,7 @@
         $('#ddlMake').on('change', function () {
             var selectedMakeID = $(this).val();
             if (selectedMakeID) {
-                GetVehicleTypes(selectedMakeID);  // Call function to get vehicle types
+                GetVehicleTypes(selectedMakeID);
             } else {
                 $('#ddlVehicleType').html('<option value="">Select a vehicle type</option>');
             }
